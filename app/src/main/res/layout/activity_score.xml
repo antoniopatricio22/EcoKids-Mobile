@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/eco_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EcoKids"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/eco_green_dark" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/btnThemeScore"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"/>
+            <!-- android:src="@drawable/ic_sun"/-->
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvScoreTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pontuação"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/eco_text_dark"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@color/eco_card_background"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvPlayerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="João"
+                android:textSize="18sp"
+                android:textColor="@color/eco_text_dark"/>
+
+            <TextView
+                android:id="@+id/tvPlayerScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="69 pontos"
+                android:textSize="18sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/eco_text_dark"/>
+
+            <TextView
+                android:id="@+id/tvUnlockedAchievements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nenhuma conquista desbloqueada ainda."
+                android:layout_marginTop="16dp"
+                android:textColor="@color/eco_text_dark" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

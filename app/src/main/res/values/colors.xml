@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="eco_background">#E0FFE8</color>
+    <color name="eco_green_dark">#007F2F</color>
+    <color name="eco_green">#11AA44</color>
+    <color name="eco_green_light">#CFFFD9</color>
+    <color name="eco_button_green">#11AA44</color>
+    <color name="eco_button_text">#FFFFFF</color>
+    <color name="eco_card_background">#FFFFFF</color>
+    <color name="eco_text_dark">#004020</color>
+
+    <color name="eco_blue_bin">#0044FF</color>
+    <color name="eco_red_bin">#FF0000</color>
+    <color name="eco_yellow_bin">#FFD600</color>
+    <color name="eco_green_bin">#00AA44</color>
+    <color name="eco_brown_bin">#8B4513</color>
+
+    <color name="eco_score_blue">#007BFF</color>
+    <color name="eco_score_green">#00AA44</color>
+</resources>
