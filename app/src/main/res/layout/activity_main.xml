@@ -35,8 +35,8 @@
             android:id="@+id/btnTheme"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@android:color/transparent"/>
-    <!-- android:src="@drawable/ic_sun" /-->
+            android:background="@android:color/transparent"
+            android:src="@drawable/light_mode_icon" />
 </LinearLayout>
 
 <!-- Ícone reciclagem + "Jogar" -->
@@ -54,8 +54,8 @@
         <ImageView
             android:id="@+id/imgRecycle"
             android:layout_width="120dp"
-            android:layout_height="120dp"/>
-    <!-- android:src="@drawable/ic_recycle" /-->
+            android:layout_height="120dp"
+            android:src="@drawable/jogar" />
 
 <TextView
     android:id="@+id/tvPlayTitle"
@@ -129,32 +129,32 @@
 
             <ImageView
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
-            <!-- android:src="@drawable/ic_bin_blue" /-->
+                android:layout_height="32dp"
+                android:src="@drawable/trash_icon_blue" />
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"/>
-            <!-- android:src="@drawable/ic_bin_red" /-->
+            android:layout_marginStart="8dp"
+            android:src="@drawable/trash_icon_red" />
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"/>
-            <!-- android:src="@drawable/ic_bin_green" /-->
+            android:layout_marginStart="8dp"
+            android:src="@drawable/trash_icon_green"/>
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"/>
-            <!-- android:src="@drawable/ic_bin_yellow" /-->
+            android:layout_marginStart="8dp"
+            android:src="@drawable/trash_icon_yellow"/>
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"/>
-            <!-- android:src="@drawable/ic_bin_brown" /-->
+            android:layout_marginStart="8dp"
+            android:src="@drawable/trash_icon_brown" />
     </LinearLayout>
 </LinearLayout>
 

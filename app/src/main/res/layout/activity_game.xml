@@ -29,8 +29,8 @@
             android:id="@+id/btnThemeGame"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@android:color/transparent"/>
-            <!-- android:src="@drawable/ic_sun" -->
+            android:background="@android:color/transparent"
+            android:src="@drawable/light_mode_icon" />
     </LinearLayout>
 
     <!-- Texto + som -->
@@ -52,8 +52,8 @@
             android:id="@+id/btnSound"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@android:color/transparent"/>
-            <!-- android:src="@drawable/ic_sound" -->
+            android:background="@android:color/transparent"
+            android:src="@drawable/turn_off_sound" />
     </LinearLayout>
 
     <!-- Placar -->
@@ -108,8 +108,8 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:padding="8dp"/>
-            <!-- android:src="@drawable/ic_item_banana" -->
+            android:padding="8dp"
+            android:src="@drawable/item_banana" />
 
         <!-- Repita para item2..item20 com outros ícones -->
     </GridLayout>
@@ -131,8 +131,8 @@
 
             <ImageView
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
-                <!-- android:src="@drawable/ic_bin_blue" /-->
+                android:layout_height="32dp"
+                android:src="@drawable/trash_icon_blue" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -150,8 +150,8 @@
 
             <ImageView
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
-                <!-- android:src="@drawable/ic_bin_red" /-->
+                android:layout_height="32dp"
+                android:src="@drawable/trash_icon_red" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -169,8 +169,8 @@
 
             <ImageView
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
-                <!-- android:src="@drawable/ic_bin_green" /-->
+                android:layout_height="32dp"
+                android:src="@drawable/trash_icon_green"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,8 +188,8 @@
 
             <ImageView
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
-                <!-- android:src="@drawable/ic_bin_yellow" /-->
+                android:layout_height="32dp"
+                android:src="@drawable/trash_icon_yellow" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -207,8 +207,8 @@
 
             <ImageView
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
-                <!-- android:src="@drawable/ic_bin_brown" /-->
+                android:layout_height="32dp"
+                android:src="@drawable/trash_icon_brown" />
 
             <TextView
                 android:layout_width="wrap_content"

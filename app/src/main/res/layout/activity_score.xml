@@ -28,8 +28,8 @@
             android:id="@+id/btnThemeScore"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@android:color/transparent"/>
-            <!-- android:src="@drawable/ic_sun"/-->
+            android:background="@android:color/transparent"
+            android:src="@drawable/light_mode_icon"/>
     </LinearLayout>
 
     <TextView
