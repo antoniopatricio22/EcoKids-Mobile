@@ -2,7 +2,9 @@ package com.example.ecokids_v2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -30,5 +32,13 @@ public class ScoreActivity extends AppCompatActivity {
         } else {
             tvUnlockedAchievements.setText("Nenhuma conquista desbloqueada ainda.");
         }
+
+        Button btnRestart = findViewById(R.id.btnRestart);
+        btnRestart.setOnClickListener(v -> {
+            Intent intent = new Intent(ScoreActivity.this, GameActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
     }
 }

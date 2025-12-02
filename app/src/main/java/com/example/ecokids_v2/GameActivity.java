@@ -1,40 +1,42 @@
 package com.example.ecokids_v2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.Button;
 
-import java.util.HashMap;
-import java.util.Map;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.*;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Button btnScore, btnTimer;
-    private GridLayout gridItems;
-    private LinearLayout binPaper, binPlastic, binGlass, binMetal, binOrganic;
+    private View selectedItem = null;
+    private String selectedCategory = "";
+    private final Map<Integer, String> drawableToCategory = new HashMap<>();
+    private final List<Integer> drawables = new ArrayList<>();
+    private final Map<View, Integer> viewToDrawable = new HashMap<>();
 
-    private CountDownTimer timer;
-    private int timeLeft = 60; // segundos
+    private CountDownTimer countDownTimer;
+    private Button btnScore, btnTimer;
     private int score = 0;
 
-    // id do item selecionado
-    private View selectedItem = null;
+    private MediaPlayer soundClick;
+    private MediaPlayer soundCorrect;
 
-    // categoria do item selecionado
-    private String selectedCategory = null;
+    private MediaPlayer soundIncorrect;
 
-    // mapa simples: idView -> categoria (papel, plastico, etc)
-    private final Map<Integer, String> itemCategories = new HashMap<>();
+    private MediaPlayer musicPlayer;
+    private boolean isMusicPlaying = true;
+    private ImageView btnSound;
 
-    private String playerName;
+    private ImageView imgFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,110 +45,162 @@ public class GameActivity extends AppCompatActivity {
 
         btnScore = findViewById(R.id.btnScore);
         btnTimer = findViewById(R.id.btnTimer);
-        gridItems = findViewById(R.id.gridItems);
+        btnSound = findViewById(R.id.btnSound);
 
-        binPaper = findViewById(R.id.binPaper);
-        binPlastic = findViewById(R.id.binPlastic);
-        binGlass = findViewById(R.id.binGlass);
-        binMetal = findViewById(R.id.binMetal);
-        binOrganic = findViewById(R.id.binOrganic);
+        soundClick = MediaPlayer.create(this, R.raw.click_sound);
+        soundCorrect = MediaPlayer.create(this, R.raw.correct_sound);
+        soundIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
 
-        playerName = getIntent().getStringExtra("player_name");
+        // Inicializa música de fundo
+        musicPlayer = MediaPlayer.create(this, R.raw.background_music);
+        musicPlayer.setLooping(true);
+        musicPlayer.start();
 
-        setupItems();
-        setupBins();
-        startTimer();
+        btnSound.setOnClickListener(v -> {
+            if (isMusicPlaying) {
+                musicPlayer.pause();
+                btnSound.setImageResource(R.drawable.turn_off_sound);
+            } else {
+                musicPlayer.start();
+                btnSound.setImageResource(R.drawable.turn_on_sound);
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        setupDrawableCategoryMap();
+        setupGameBoard();
+        setupBinClickListeners();
+        startGameTimer();
     }
 
-    private void setupItems() {
-        View.OnClickListener itemClickListener = v -> {
-            selectedItem = v;
-            selectedCategory = itemCategories.get(v.getId());
-            Toast.makeText(this, "Item selecionado: " + selectedCategory, Toast.LENGTH_SHORT).show();
-        };
+    private void setupDrawableCategoryMap() {
+        drawableToCategory.put(R.drawable.item_banana, "organico");
+        drawableToCategory.put(R.drawable.item_caderno, "papel");
+        drawableToCategory.put(R.drawable.item_caixa_papelao, "papel");
+        drawableToCategory.put(R.drawable.item_caixinha_suco, "papel");
+        drawableToCategory.put(R.drawable.item_cenoura, "organico");
+        drawableToCategory.put(R.drawable.item_chave_boca, "metal");
+        drawableToCategory.put(R.drawable.item_colher_metal, "metal");
+        drawableToCategory.put(R.drawable.item_copo_descartavel_plastico, "plastico");
+        drawableToCategory.put(R.drawable.item_copo_leite, "plastico");
+        drawableToCategory.put(R.drawable.item_dispenser_plastico, "plastico");
+        drawableToCategory.put(R.drawable.item_escova_dentes, "plastico");
+        drawableToCategory.put(R.drawable.item_espiga_milho, "organico");
+        drawableToCategory.put(R.drawable.item_folha_jornal, "papel");
+        drawableToCategory.put(R.drawable.item_lata_tomate, "metal");
+        drawableToCategory.put(R.drawable.item_folha_papel, "papel");
+        drawableToCategory.put(R.drawable.item_livros, "papel");
+        drawableToCategory.put(R.drawable.item_maca_fruta, "organico");
+        drawableToCategory.put(R.drawable.item_mamadeira, "plastico");
+        drawableToCategory.put(R.drawable.item_moeda, "metal");
+        drawableToCategory.put(R.drawable.item_pao_caixa, "organico");
+        drawableToCategory.put(R.drawable.item_uvas, "organico");
+        drawableToCategory.put(R.drawable.item_sino_dourado, "metal");
+        drawableToCategory.put(R.drawable.item_pote_creme, "plastico");
+        drawableToCategory.put(R.drawable.item_papel_higienico, "papel");
+        drawableToCategory.put(R.drawable.item_pote_vidro, "vidro");
 
-        for (int i = 1; i <= 25; i++) {
-            String itemId = "item" + i;
-            int resId = getResources().getIdentifier(itemId, "id", getPackageName());
-            ImageView item = findViewById(resId);
-            if (item != null) {
-                item.setOnClickListener(itemClickListener);
+        drawables.addAll(drawableToCategory.keySet());
+    }
+
+    private void setupGameBoard() {
+        GridLayout grid = findViewById(R.id.gridItems);
+        List<View> items = new ArrayList<>();
+
+        TypedArray itemIds = getResources().obtainTypedArray(R.array.game_item_ids);
+
+        for (int i = 0; i < itemIds.length(); i++) {
+            int resId = itemIds.getResourceId(i, 0); // Pega o ID do item no array
+            if (resId != 0) {
+                ImageView itemView = findViewById(resId);
+                if (itemView != null) {
+                    items.add(itemView);
+                }
             }
         }
 
-        // Define categorias de exemplo (preencha conforme seu jogo)
-        itemCategories.put(R.id.item1, "organico");
-        itemCategories.put(R.id.item2, "papel");
-        itemCategories.put(R.id.item3, "papel");
-        itemCategories.put(R.id.item4, "papel");
-        itemCategories.put(R.id.item5, "organico");
+        itemIds.recycle();
 
-        itemCategories.put(R.id.item6, "metal");
-        itemCategories.put(R.id.item7, "metal");
-        itemCategories.put(R.id.item8, "plastico");
-        itemCategories.put(R.id.item9, "plastico");
-        itemCategories.put(R.id.item10, "plastico");
+        Collections.shuffle(drawables);
 
-        itemCategories.put(R.id.item11, "plastico");
-        itemCategories.put(R.id.item12, "organico");
-        itemCategories.put(R.id.item13, "papel");
-        itemCategories.put(R.id.item14, "metal");
-        itemCategories.put(R.id.item15, "papel");
+        for (int i = 0; i < items.size(); i++) {
+            ImageView item = (ImageView) items.get(i);
+            int drawable = drawables.get(i);
+            item.setImageResource(drawable);
+            item.setVisibility(View.VISIBLE);
+            viewToDrawable.put(item, drawable);
 
-        itemCategories.put(R.id.item16, "papel");
-        itemCategories.put(R.id.item17, "organico");
-        itemCategories.put(R.id.item18, "plastico");
-        itemCategories.put(R.id.item19, "metal");
-        itemCategories.put(R.id.item20, "organico");
+            item.setOnClickListener(v -> {
+                selectedItem = v;
+                selectedCategory = drawableToCategory.get(viewToDrawable.get(v));
+                if (soundClick != null) soundClick.start();
+            });
+        }
 
-        itemCategories.put(R.id.item21, "organico");
-        itemCategories.put(R.id.item22, "metal");
-        itemCategories.put(R.id.item23, "plastico");
-        itemCategories.put(R.id.item24, "papel");
-        itemCategories.put(R.id.item25, "vidro");
+        Collections.shuffle(items);
+        grid.removeAllViews();
+        for (View view : items) {
+            grid.addView(view);
+        }
     }
 
-    private void setupBins() {
-        View.OnClickListener binClickListener = v -> {
-            if (selectedItem == null || selectedCategory == null) {
-                Toast.makeText(this, "Selecione um item primeiro!", Toast.LENGTH_SHORT).show();
+    private void setupBinClickListeners() {
+        setupBin(R.id.binPaper, "papel");
+        setupBin(R.id.binPlastic, "plastico");
+        setupBin(R.id.binGlass, "vidro");
+        setupBin(R.id.binMetal, "metal");
+        setupBin(R.id.binOrganic, "organico");
+    }
+
+    private void setupBin(int binId, String category) {
+        View bin = findViewById(binId);
+        bin.setOnClickListener(v -> {
+            if (selectedItem == null) {
+                Toast.makeText(this, "Selecione um item primeiro", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String binCategory = null;
-            int id = v.getId();
-
-            if (id == R.id.binPaper) binCategory = "papel";
-            else if (id == R.id.binPlastic) binCategory = "plastico";
-            else if (id == R.id.binGlass) binCategory = "vidro";
-            else if (id == R.id.binMetal) binCategory = "metal";
-            else if (id == R.id.binOrganic) binCategory = "organico";
-
-            if (binCategory != null && binCategory.equals(selectedCategory)) {
+            if (selectedCategory.equals(category)) {
+                soundCorrect.start();
                 score++;
                 btnScore.setText("Acertos: " + score);
-                selectedItem.setVisibility(View.INVISIBLE);
+                removeItemAndCollapse(selectedItem);
+                //showFeedback(true);
                 selectedItem = null;
-                selectedCategory = null;
-                Toast.makeText(this, "Acertou!", Toast.LENGTH_SHORT).show();
+                selectedCategory = "";
             } else {
-                Toast.makeText(this, "Ops, lixeira errada!", Toast.LENGTH_SHORT).show();
+                //showFeedback(false);
+                soundIncorrect.start();
+                Toast.makeText(this, "Errado!.", Toast.LENGTH_SHORT).show();
             }
-        };
-
-        binPaper.setOnClickListener(binClickListener);
-        binPlastic.setOnClickListener(binClickListener);
-        binGlass.setOnClickListener(binClickListener);
-        binMetal.setOnClickListener(binClickListener);
-        binOrganic.setOnClickListener(binClickListener);
+        });
     }
 
-    private void startTimer() {
-        timer = new CountDownTimer(timeLeft * 1000L, 1000L) {
+    private void removeItemAndCollapse(View itemToRemove) {
+        GridLayout grid = findViewById(R.id.gridItems);
+        grid.removeView(itemToRemove);
+        viewToDrawable.remove(itemToRemove);
+
+        List<View> remaining = new ArrayList<>();
+        for (int i = 0; i < grid.getChildCount(); i++) {
+            remaining.add(grid.getChildAt(i));
+        }
+
+        grid.removeAllViews();
+        for (View v : remaining) {
+            grid.addView(v);
+        }
+
+        if (remaining.isEmpty()) {
+            endGame(); // vitória
+        }
+    }
+
+    private void startGameTimer() {
+        countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeLeft--;
-                btnTimer.setText("Tempo: " + timeLeft + "s");
+                btnTimer.setText("Tempo: " + (millisUntilFinished / 1000) + "s");
             }
 
             @Override
@@ -157,19 +211,42 @@ public class GameActivity extends AppCompatActivity {
         }.start();
     }
 
+    private void showFeedback(boolean correct) {
+        imgFeedback.setImageResource(correct ? R.drawable.thumb_up : R.drawable.sad_face);
+        imgFeedback.setVisibility(View.VISIBLE);
+        imgFeedback.setScaleX(0f);
+        imgFeedback.setScaleY(0f);
+        imgFeedback.animate()
+                .scaleX(1f).scaleY(1f)
+                .setDuration(200)
+                .withEndAction(() -> imgFeedback.postDelayed(() -> {
+                    imgFeedback.animate().scaleX(0f).scaleY(0f)
+                            .setDuration(200)
+                            .withEndAction(() -> imgFeedback.setVisibility(View.GONE))
+                            .start();
+                }, 500))
+                .start();
+    }
+
+
     private void endGame() {
-        if (timer != null) timer.cancel();
+        if (countDownTimer != null) countDownTimer.cancel();
 
         Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
-        intent.putExtra("player_name", playerName);
         intent.putExtra("score", score);
         startActivity(intent);
-        finish();
+        finish(); // fecha a partida atual
     }
 
     @Override
     protected void onDestroy() {
+        if (soundClick != null) soundClick.release();
+        if (soundCorrect != null) soundCorrect.release();
+        if (countDownTimer != null) countDownTimer.cancel();
+        if (musicPlayer != null) {
+            musicPlayer.stop();
+            musicPlayer.release();
+        }
         super.onDestroy();
-        if (timer != null) timer.cancel();
     }
 }

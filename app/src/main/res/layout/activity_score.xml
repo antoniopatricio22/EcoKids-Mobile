@@ -78,6 +78,17 @@
                 android:text="Nenhuma conquista desbloqueada ainda."
                 android:layout_marginTop="16dp"
                 android:textColor="@color/eco_text_dark" />
+
+            <Button
+                android:id="@+id/btnRestart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Jogar Novamente"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/eco_score_green" />
+
         </LinearLayout>
     </LinearLayout>
 

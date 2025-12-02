@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="game_item_ids">
+        <item>@id/item1</item>
+        <item>@id/item2</item>
+        <item>@id/item3</item>
+        <item>@id/item4</item>
+        <item>@id/item5</item>
+        <item>@id/item6</item>
+        <item>@id/item7</item>
+        <item>@id/item8</item>
+        <item>@id/item9</item>
+        <item>@id/item10</item>
+        <item>@id/item11</item>
+        <item>@id/item12</item>
+        <item>@id/item13</item>
+        <item>@id/item14</item>
+        <item>@id/item15</item>
+        <item>@id/item16</item>
+        <item>@id/item17</item>
+        <item>@id/item18</item>
+        <item>@id/item19</item>
+        <item>@id/item20</item>
+        <item>@id/item21</item>
+        <item>@id/item22</item>
+        <item>@id/item23</item>
+        <item>@id/item24</item>
+        <item>@id/item25</item>
+    </integer-array>
+</resources>
