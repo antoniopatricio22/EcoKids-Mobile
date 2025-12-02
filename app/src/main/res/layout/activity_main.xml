@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/eco_background">
@@ -10,21 +11,21 @@
         android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center_vertical">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="EcoKids"
+            android:textColor="@color/eco_green_dark"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/eco_green_dark" />
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
@@ -37,125 +38,140 @@
             android:layout_height="32dp"
             android:background="@android:color/transparent"
             android:src="@drawable/light_mode_icon" />
-</LinearLayout>
+    </LinearLayout>
 
-<!-- Ícone reciclagem + "Jogar" -->
+    <!-- Ícone reciclagem + "Jogar" -->
     <LinearLayout
         android:id="@+id/logoPlayContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btnAprender"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
-        <ImageView
-            android:id="@+id/imgRecycle"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/jogar" />
+    </LinearLayout>
 
-<TextView
-    android:id="@+id/tvPlayTitle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Jogar"
-    android:textColor="@color/eco_green_dark"
-    android:textSize="32sp"
-    android:textStyle="bold"
-    android:layout_marginTop="8dp" />
-</LinearLayout>
+    <!-- Botões -->
 
-<!-- Botões -->
+    <!-- Rodapé -->
+
     <Button
         android:id="@+id/btnAprender"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="48dp"
+        android:layout_marginTop="272dp"
         android:layout_marginEnd="48dp"
+        android:backgroundTint="@color/eco_button_green"
         android:text="Aprender"
         android:textAllCaps="false"
-        android:textSize="18sp"
         android:textColor="@color/eco_button_text"
-        android:backgroundTint="@color/eco_button_green"
-        app:layout_constraintTop_toBottomOf="@id/logoPlayContainer"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/logoPlayContainer" />
 
     <Button
         android:id="@+id/btnConquistas"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/eco_button_green"
         android:text="Conquistas"
         android:textAllCaps="false"
-        android:textSize="18sp"
         android:textColor="@color/eco_button_text"
-        android:backgroundTint="@color/eco_button_green"
-        app:layout_constraintTop_toBottomOf="@id/btnAprender"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/btnAprender" />
 
-    <!-- Rodapé -->
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/tvSlogan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Seja um pequeno herói!"
             android:textColor="@color/eco_text_dark"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/trash_icon_blue" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/trash_icon_red" />
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/trash_icon_red" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/trash_icon_green"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/trash_icon_green" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/trash_icon_yellow"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/trash_icon_yellow" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/trash_icon_brown" />
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/trash_icon_brown" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgRecycle"
+        android:layout_width="137dp"
+        android:layout_height="131dp"
+        android:src="@drawable/jogar"
+        android:contentDescription="Iniciar jogo"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnAprender"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp" />
+
+    <!-- TextView
+        android:id="@+id/tvPlayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jogar"
+        android:textColor="@color/eco_green_dark"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteY="282dp" /-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

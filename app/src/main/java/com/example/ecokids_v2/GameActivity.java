@@ -32,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
     private String selectedCategory = null;
 
     // mapa simples: idView -> categoria (papel, plastico, etc)
-    private Map<Integer, String> itemCategories = new HashMap<>();
+    private final Map<Integer, String> itemCategories = new HashMap<>();
 
     private String playerName;
 
@@ -59,22 +59,51 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupItems() {
-        // exemplo: veja os IDs que você realmente colocou na activity_game.xml
-        ImageView item1 = findViewById(R.id.item1);
-        // ... repita para item2..item20
-        // aqui só demonstro com 1 para não ficar enorme
-
-        // Defina a categoria de cada item
-        itemCategories.put(R.id.item1, "organico"); // banana, por exemplo
-
         View.OnClickListener itemClickListener = v -> {
             selectedItem = v;
             selectedCategory = itemCategories.get(v.getId());
-            Toast.makeText(this, "Item selecionado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Item selecionado: " + selectedCategory, Toast.LENGTH_SHORT).show();
         };
 
-        item1.setOnClickListener(itemClickListener);
-        // item2.setOnClickListener(itemClickListener) ...
+        for (int i = 1; i <= 25; i++) {
+            String itemId = "item" + i;
+            int resId = getResources().getIdentifier(itemId, "id", getPackageName());
+            ImageView item = findViewById(resId);
+            if (item != null) {
+                item.setOnClickListener(itemClickListener);
+            }
+        }
+
+        // Define categorias de exemplo (preencha conforme seu jogo)
+        itemCategories.put(R.id.item1, "organico");
+        itemCategories.put(R.id.item2, "papel");
+        itemCategories.put(R.id.item3, "papel");
+        itemCategories.put(R.id.item4, "papel");
+        itemCategories.put(R.id.item5, "organico");
+
+        itemCategories.put(R.id.item6, "metal");
+        itemCategories.put(R.id.item7, "metal");
+        itemCategories.put(R.id.item8, "plastico");
+        itemCategories.put(R.id.item9, "plastico");
+        itemCategories.put(R.id.item10, "plastico");
+
+        itemCategories.put(R.id.item11, "plastico");
+        itemCategories.put(R.id.item12, "organico");
+        itemCategories.put(R.id.item13, "papel");
+        itemCategories.put(R.id.item14, "metal");
+        itemCategories.put(R.id.item15, "papel");
+
+        itemCategories.put(R.id.item16, "papel");
+        itemCategories.put(R.id.item17, "organico");
+        itemCategories.put(R.id.item18, "plastico");
+        itemCategories.put(R.id.item19, "metal");
+        itemCategories.put(R.id.item20, "organico");
+
+        itemCategories.put(R.id.item21, "organico");
+        itemCategories.put(R.id.item22, "metal");
+        itemCategories.put(R.id.item23, "plastico");
+        itemCategories.put(R.id.item24, "papel");
+        itemCategories.put(R.id.item25, "vidro");
     }
 
     private void setupBins() {

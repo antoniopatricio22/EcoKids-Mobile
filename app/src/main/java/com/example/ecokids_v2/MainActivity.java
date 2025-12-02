@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         btnConquistas = findViewById(R.id.btnConquistas);
 
         // Abrir dialog de seleção de jogo ao clicar na área "Jogar"
-        View logoPlay = findViewById(R.id.logoPlayContainer);
+        View logoPlay = findViewById(R.id.imgRecycle);
         logoPlay.setOnClickListener(v -> {
             GameSelectionDialog dialog = new GameSelectionDialog();
             dialog.show(getSupportFragmentManager(), "gameDialog");
