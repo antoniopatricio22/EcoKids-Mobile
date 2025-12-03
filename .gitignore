@@ -43,3 +43,6 @@ Thumbs.db
 *.md
 !README.MD
 !Arquitetura.md
+
+
+horusec-result.json
