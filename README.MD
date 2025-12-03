@@ -117,7 +117,7 @@ adb exec-out run-as com.example.ecokids_v2 cat databases/ecokids_v2.db > ecokids
 - Antônio Patrício Macena de Barros
 - Brunno Barbosa de Lima Assunção
 - Gabrielle Mello Nascimento
-- Igor Gabriel 
+- Igor Gabriel Soares de Almeida Araújo
 - João Ricardo Queiroz Calado
 - Lucas de Araújo dos Prazeres
 - Nayane Maria Lopes dos Santos
