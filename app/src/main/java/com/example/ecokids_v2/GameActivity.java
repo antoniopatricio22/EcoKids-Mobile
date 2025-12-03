@@ -1,42 +1,44 @@
 package com.example.ecokids_v2;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class GameActivity extends AppCompatActivity {
 
-    private View selectedItem = null;
+    private View selectedItemView = null;
     private String selectedCategory = "";
     private final Map<Integer, String> drawableToCategory = new HashMap<>();
+    private RecyclerView recyclerItems;
+    private GameItemAdapter adapter;
     private final List<Integer> drawables = new ArrayList<>();
-    private final Map<View, Integer> viewToDrawable = new HashMap<>();
-
     private CountDownTimer countDownTimer;
     private Button btnScore, btnTimer;
     private int score = 0;
-
     private MediaPlayer soundClick;
     private MediaPlayer soundCorrect;
-
     private MediaPlayer soundIncorrect;
-
     private MediaPlayer musicPlayer;
     private boolean isMusicPlaying = true;
     private ImageView btnSound;
-
     private ImageView imgFeedback;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,31 +48,36 @@ public class GameActivity extends AppCompatActivity {
         btnScore = findViewById(R.id.btnScore);
         btnTimer = findViewById(R.id.btnTimer);
         btnSound = findViewById(R.id.btnSound);
+        imgFeedback = findViewById(R.id.imgFeedback);
+        recyclerItems = findViewById(R.id.recyclerItems);
 
         soundClick = MediaPlayer.create(this, R.raw.click_sound);
         soundCorrect = MediaPlayer.create(this, R.raw.correct_sound);
         soundIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
-
-        // Inicializa música de fundo
         musicPlayer = MediaPlayer.create(this, R.raw.background_music);
-        musicPlayer.setLooping(true);
-        musicPlayer.start();
+        if (musicPlayer != null) {
+            musicPlayer.setLooping(true);
+            musicPlayer.start();
+        }
 
-        btnSound.setOnClickListener(v -> {
-            if (isMusicPlaying) {
-                musicPlayer.pause();
-                btnSound.setImageResource(R.drawable.turn_off_sound);
-            } else {
-                musicPlayer.start();
-                btnSound.setImageResource(R.drawable.turn_on_sound);
-            }
-            isMusicPlaying = !isMusicPlaying;
-        });
+        btnSound.setOnClickListener(v -> toggleMusic());
 
         setupDrawableCategoryMap();
         setupGameBoard();
         setupBinClickListeners();
         startGameTimer();
+    }
+
+    private void toggleMusic() {
+        if (musicPlayer == null) return;
+        if (isMusicPlaying) {
+            musicPlayer.pause();
+            btnSound.setImageResource(R.drawable.turn_off_sound);
+        } else {
+            musicPlayer.start();
+            btnSound.setImageResource(R.drawable.turn_on_sound);
+        }
+        isMusicPlaying = !isMusicPlaying;
     }
 
     private void setupDrawableCategoryMap() {
@@ -104,44 +111,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupGameBoard() {
-        GridLayout grid = findViewById(R.id.gridItems);
-        List<View> items = new ArrayList<>();
-
-        TypedArray itemIds = getResources().obtainTypedArray(R.array.game_item_ids);
-
-        for (int i = 0; i < itemIds.length(); i++) {
-            int resId = itemIds.getResourceId(i, 0); // Pega o ID do item no array
-            if (resId != 0) {
-                ImageView itemView = findViewById(resId);
-                if (itemView != null) {
-                    items.add(itemView);
-                }
-            }
-        }
-
-        itemIds.recycle();
-
         Collections.shuffle(drawables);
 
-        for (int i = 0; i < items.size(); i++) {
-            ImageView item = (ImageView) items.get(i);
-            int drawable = drawables.get(i);
-            item.setImageResource(drawable);
-            item.setVisibility(View.VISIBLE);
-            viewToDrawable.put(item, drawable);
+        adapter = new GameItemAdapter(drawables, (drawableResId, position, itemView) -> {
+            selectedItemView = itemView;
+            selectedCategory = drawableToCategory.get(drawableResId);
+            selectedPosition = position;
+            if (soundClick != null) soundClick.start();
+            adapter.setSelectedItem(itemView);
+        });
 
-            item.setOnClickListener(v -> {
-                selectedItem = v;
-                selectedCategory = drawableToCategory.get(viewToDrawable.get(v));
-                if (soundClick != null) soundClick.start();
-            });
-        }
-
-        Collections.shuffle(items);
-        grid.removeAllViews();
-        for (View view : items) {
-            grid.addView(view);
-        }
+        int spanCount = 5;
+        recyclerItems.setLayoutManager(new GridLayoutManager(this, spanCount));
+        recyclerItems.setAdapter(adapter);
+        recyclerItems.setHasFixedSize(true);
     }
 
     private void setupBinClickListeners() {
@@ -155,44 +138,41 @@ public class GameActivity extends AppCompatActivity {
     private void setupBin(int binId, String category) {
         View bin = findViewById(binId);
         bin.setOnClickListener(v -> {
-            if (selectedItem == null) {
+            if (selectedItemView == null) {
                 Toast.makeText(this, "Selecione um item primeiro", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (selectedCategory.equals(category)) {
-                soundCorrect.start();
+                if (soundCorrect != null) soundCorrect.start();
                 score++;
                 btnScore.setText("Acertos: " + score);
-                removeItemAndCollapse(selectedItem);
-                //showFeedback(true);
-                selectedItem = null;
-                selectedCategory = "";
+                showFeedback(true);
+                removeItemFromBoard();
             } else {
-                //showFeedback(false);
-                soundIncorrect.start();
-                Toast.makeText(this, "Errado!.", Toast.LENGTH_SHORT).show();
+                if (soundIncorrect != null) soundIncorrect.start();
+                showFeedback(false);
             }
         });
     }
 
-    private void removeItemAndCollapse(View itemToRemove) {
-        GridLayout grid = findViewById(R.id.gridItems);
-        grid.removeView(itemToRemove);
-        viewToDrawable.remove(itemToRemove);
-
-        List<View> remaining = new ArrayList<>();
-        for (int i = 0; i < grid.getChildCount(); i++) {
-            remaining.add(grid.getChildAt(i));
+    private void removeItemFromBoard() {
+        if (selectedPosition == RecyclerView.NO_POSITION) {
+            return;
         }
 
-        grid.removeAllViews();
-        for (View v : remaining) {
-            grid.addView(v);
+        if (selectedPosition >= 0 && selectedPosition < drawables.size()) {
+            drawables.remove(selectedPosition);
+            adapter.notifyItemRemoved(selectedPosition);
         }
 
-        if (remaining.isEmpty()) {
-            endGame(); // vitória
+        selectedItemView = null;
+        selectedCategory = "";
+        selectedPosition = RecyclerView.NO_POSITION;
+        adapter.clearSelection();
+
+        if (drawables.isEmpty()) {
+            endGame();
         }
     }
 
@@ -212,22 +192,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showFeedback(boolean correct) {
+        if (imgFeedback == null) return;
         imgFeedback.setImageResource(correct ? R.drawable.thumb_up : R.drawable.sad_face);
         imgFeedback.setVisibility(View.VISIBLE);
-        imgFeedback.setScaleX(0f);
-        imgFeedback.setScaleY(0f);
+        imgFeedback.setAlpha(1.0f);
         imgFeedback.animate()
-                .scaleX(1f).scaleY(1f)
-                .setDuration(200)
-                .withEndAction(() -> imgFeedback.postDelayed(() -> {
-                    imgFeedback.animate().scaleX(0f).scaleY(0f)
-                            .setDuration(200)
-                            .withEndAction(() -> imgFeedback.setVisibility(View.GONE))
-                            .start();
-                }, 500))
+                .alpha(0.0f)
+                .setDuration(1000)
+                .withEndAction(() -> imgFeedback.setVisibility(View.GONE))
                 .start();
     }
-
 
     private void endGame() {
         if (countDownTimer != null) countDownTimer.cancel();
@@ -235,18 +209,30 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
         intent.putExtra("score", score);
         startActivity(intent);
-        finish(); // fecha a partida atual
+        finish();
     }
 
     @Override
     protected void onDestroy() {
-        if (soundClick != null) soundClick.release();
-        if (soundCorrect != null) soundCorrect.release();
+        super.onDestroy();
+
         if (countDownTimer != null) countDownTimer.cancel();
+        if (soundClick != null) {
+            soundClick.release();
+            soundClick = null;
+        }
+        if (soundCorrect != null) {
+            soundCorrect.release();
+            soundCorrect = null;
+        }
+        if (soundIncorrect != null) {
+            soundIncorrect.release();
+            soundIncorrect = null;
+        }
         if (musicPlayer != null) {
             musicPlayer.stop();
             musicPlayer.release();
+            musicPlayer = null;
         }
-        super.onDestroy();
     }
 }

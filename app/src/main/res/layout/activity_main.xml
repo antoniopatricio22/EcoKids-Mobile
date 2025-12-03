@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="EcoKids"
+            android:fontFamily="@font/irish_grover"
             android:textColor="@color/eco_green_dark"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -66,6 +67,7 @@
         android:layout_marginTop="272dp"
         android:layout_marginEnd="48dp"
         android:backgroundTint="@color/eco_button_green"
+        android:fontFamily="@font/irish_grover"
         android:text="Aprender"
         android:textAllCaps="false"
         android:textColor="@color/eco_button_text"
@@ -83,6 +85,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="48dp"
         android:backgroundTint="@color/eco_button_green"
+        android:fontFamily="@font/irish_grover"
         android:text="Conquistas"
         android:textAllCaps="false"
         android:textColor="@color/eco_button_text"
@@ -108,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:fontFamily="@font/irish_grover"
             android:text="Seja um pequeno herói!"
             android:textColor="@color/eco_text_dark"
             android:textSize="18sp" />
@@ -163,15 +167,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="24dp" />
 
-    <!-- TextView
-        android:id="@+id/tvPlayTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jogar"
-        android:textColor="@color/eco_green_dark"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="282dp" /-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

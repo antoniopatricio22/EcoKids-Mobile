@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_conquista1"
+    android:id="@+id/card_conquista2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
@@ -11,7 +11,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/selo_100" />
+        android:src="@drawable/selo_velocista" />
 
     <TextView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:fontFamily="@font/irish_grover"
-        android:text="Reciclador Nota 100!"
+        android:text="Velocista Sustentável!"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/eco_text_dark" />
@@ -30,7 +30,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:fontFamily="@font/irish_grover"
-        android:text="Coloque corretamente todos os itens nas suas lixeiras correspondentes."
+        android:text="Complete o jogo em menos de 1 minuto e mostre que você é rápido e eficiente!"
         android:textSize="15sp"
         android:textColor="@color/eco_text_black" />
 

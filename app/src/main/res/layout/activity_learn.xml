@@ -20,6 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="EcoKids"
+                android:fontFamily="@font/irish_grover"
                 android:textColor="@color/eco_green_dark"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -55,6 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:fontFamily="@font/irish_grover"
                 android:text="Aprender\nsobre\nReciclagem"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -65,30 +67,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/irish_grover"
                 android:gravity="center"
                 android:text="Vamos descobrir juntos como cuidar do nosso planeta separando o lixo do jeito certo!"
                 android:textSize="16sp"
-                android:textColor="@color/eco_text_dark" />
+                android:textColor="@color/eco_text_black" />
         </LinearLayout>
 
-        <!-- Agora os cards de cada tipo de lixo - repeti alguns exemplos -->
         <!-- Orgânico -->
         <include layout="@layout/item_card_lixo_organico" />
 
         <!-- Papel -->
-        <!-- <include layout="@layout/item_card_lixo_papel" />
+        <include layout="@layout/item_card_lixo_papel" />
 
-        <!- Plástico -->
-        <!-- <include layout="@layout/item_card_lixo_plastico" />
+        <!-- Plástico -->
+        <include layout="@layout/item_card_lixo_plastico" />
 
-        <!- Metálico -->
-        <!-- <include layout="@layout/item_card_lixo_metal" />
+        <!-- Metálico -->
+        <include layout="@layout/item_card_lixo_metal" />
 
-        <!- Vidro -->
-        <!-- <include layout="@layout/item_card_lixo_vidro" />
+        <!-- Vidro -->
+        <include layout="@layout/item_card_lixo_vidro" />
 
-        <!- Dica final -->
-        <!-- <include layout="@layout/item_card_dica" /-->
+        <!-- Dica final -->
+        <include layout="@layout/item_card_dica" />
 
     </LinearLayout>
 </ScrollView>

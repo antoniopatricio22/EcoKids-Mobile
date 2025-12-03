@@ -8,6 +8,7 @@
     <color name="eco_button_text">#FFFFFF</color>
     <color name="eco_card_background">#FFFFFF</color>
     <color name="eco_text_dark">#004020</color>
+    <color name="eco_text_black">#000000</color>
 
     <color name="eco_blue_bin">#0044FF</color>
     <color name="eco_red_bin">#FF0000</color>

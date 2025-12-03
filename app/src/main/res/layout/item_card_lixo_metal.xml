@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#F4E5D0"
+    android:background="#FEF9DB"
     android:padding="16dp"
     android:layout_marginBottom="16dp"
     android:elevation="2dp">
@@ -11,18 +11,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lixo Orgânico"
+        android:text="Lixo Metálico"
         android:fontFamily="@font/irish_grover"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#573217" />
+        android:textColor="#4A3B02" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/irish_grover"
-        android:text="São restos de comida, cascas de frutas, verduras e folhas. Eles podem virar adubo e ajudar novas plantas a crescerem!"
+        android:text="Latas de refrigerante, tampinhas e pedaços de metal vão no lixo amarelo. Eles podem ser derretidos e virar coisas novas!"
         android:textSize="15sp"
         android:textColor="#393F59" />
 </LinearLayout>

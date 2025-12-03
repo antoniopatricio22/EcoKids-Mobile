@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EcoKids_v2</string>
+    <string name="game_item">Item do Jogo</string>
 </resources>

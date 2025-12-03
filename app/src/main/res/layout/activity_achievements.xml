@@ -19,6 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="EcoKids"
+                android:fontFamily="@font/irish_grover"
                 android:textColor="@color/eco_green_dark"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -40,6 +41,7 @@
             android:id="@+id/tvAchievementsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/irish_grover"
             android:text="Conquistas"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -49,11 +51,11 @@
         <!-- Card 1 -->
         <include layout="@layout/item_card_conquista1" />
 
-        <!-- Card 2
-        <include layout="@layout/item_card_conquista2" /> -->
+        <!-- Card 2 -->
+        <include layout="@layout/item_card_conquista2" />
 
-        <!-- Card 3
-        <include layout="@layout/item_card_conquista3" /> -->
+        <!-- Card 3 -->
+        <include layout="@layout/item_card_conquista3" />
 
     </LinearLayout>
 

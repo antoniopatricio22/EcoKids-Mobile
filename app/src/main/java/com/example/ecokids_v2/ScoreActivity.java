@@ -26,8 +26,8 @@ public class ScoreActivity extends AppCompatActivity {
         tvPlayerName.setText(name);
         tvPlayerScore.setText(score + " pontos");
 
-        // lógica simples de conquistas como exemplo
-        if (score >= 20) {
+
+        if (score == 25) {
             tvUnlockedAchievements.setText("Reciclador Nota 100!\nVocê acertou todos os itens!");
         } else {
             tvUnlockedAchievements.setText("Nenhuma conquista desbloqueada ainda.");
