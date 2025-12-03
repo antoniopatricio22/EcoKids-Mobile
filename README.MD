@@ -34,18 +34,37 @@ Este repositório contém a versão reorganizada do app com persistência local 
 
 Arquivo físico no dispositivo/emulador: `/data/data/com.example.ecokids_v2/databases/ecokids_v2.db`
 
+[Arquitetura com mais detalhes](Arquitetura.md)
 ---
 
 ##  Estrutura de Pacotes (atual)
 
 ```
 com.example.ecokids_v2/
-├── activities/      # Telas do app (Main, Game, Score, etc.)
-├── adapters/        # Adapters (RecyclerView)
-├── dialogs/         # Dialogs (GameSelectionDialog)
-├── models/          # Modelos (Player, GameScore, Achievement)
-├── database/        # DatabaseHelper (SQLite)
-└── utils/           # Utilitários e helpers
+│
+├── activities/                      #  Telas do Aplicativo
+│   ├── MainActivity.java            # Menu principal
+│   ├── GameActivity.java            # Gameplay
+│   ├── ScoreActivity.java           # Resultado e conquistas
+│   ├── LearnActivity.java           # Educação
+│   └── AchievementsActivity.java    # Galeria de conquistas
+│
+├── adapters/                        # Adapters
+│   └── GameItemAdapter.java         # RecyclerView de itens
+│
+├── dialogs/                         # Diálogos
+│   └── GameSelectionDialog.java     # Seleção de jogador
+│
+├── models/                          # Modelos de Dados
+│   ├── Player.java                  # Jogador
+│   ├── GameScore.java               # Pontuação
+│   └── Achievement.java             # Conquista
+│
+├── database/                        # Banco de Dados
+│   └── DatabaseHelper.java          # Gerenciamento SQLite
+│
+└── utils/                           # 🛠️ Utilitários (Futuro)
+    └── (Reservado)          # Utilitários e helpers
 ```
 
 ---
@@ -97,6 +116,8 @@ adb exec-out run-as com.example.ecokids_v2 cat databases/ecokids_v2.db > ecokids
 
 - Antônio Patrício Macena de Barros
 - Brunno Barbosa de Lima Assunção
+- Gabrielle Mello Nascimento
+- Igor Gabriel 
 - João Ricardo Queiroz Calado
 - Lucas de Araújo dos Prazeres
 - Nayane Maria Lopes dos Santos
