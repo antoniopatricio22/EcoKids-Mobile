@@ -1,17 +1,20 @@
-package com.example.ecokids_v2;
+package com.example.ecokids_v2.adapters;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecokids_v2.R;
+
 import java.util.List;
 
+/**
+ * Adapter para exibir os itens de lixo na grade do jogo.
+ */
 public class GameItemAdapter extends RecyclerView.Adapter<GameItemAdapter.GameItemViewHolder> {
 
     private final List<Integer> drawables;
@@ -36,16 +39,13 @@ public class GameItemAdapter extends RecyclerView.Adapter<GameItemAdapter.GameIt
 
     @Override
     public void onBindViewHolder(@NonNull GameItemViewHolder holder, int position) {
-        // FIX 1: Changed 'items' to 'drawables'
         int drawableResId = drawables.get(position);
-        // FIX 3: Changed 'imgItem' to 'imageView' to match the ViewHolder definition
         holder.imageView.setImageResource(drawableResId);
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 int pos = holder.getBindingAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION) {
-                    // FIX 2: Changed 'items' to 'drawables'
                     int clickedResId = drawables.get(pos);
                     listener.onItemClick(clickedResId, pos, holder.itemView);
                 }
@@ -64,7 +64,10 @@ public class GameItemAdapter extends RecyclerView.Adapter<GameItemAdapter.GameIt
         return drawables.size();
     }
 
-
+    /**
+     * Define o item selecionado e atualiza a visualização.
+     * @param itemView View do item selecionado
+     */
     public void setSelectedItem(View itemView) {
         View previousSelectedItem = selectedItemView;
         selectedItemView = itemView;
@@ -85,11 +88,18 @@ public class GameItemAdapter extends RecyclerView.Adapter<GameItemAdapter.GameIt
         }
     }
 
-    // Limpa a seleção
+    /**
+     * Limpa a seleção atual.
+     */
     public void clearSelection() {
         setSelectedItem(null);
     }
 
+    /**
+     * Encontra a posição de uma view na lista.
+     * @param viewToFind View a ser encontrada
+     * @return Posição da view ou RecyclerView.NO_POSITION se não encontrado
+     */
     private int findPositionForView(View viewToFind) {
         if (viewToFind == null) {
             return RecyclerView.NO_POSITION;
@@ -106,13 +116,14 @@ public class GameItemAdapter extends RecyclerView.Adapter<GameItemAdapter.GameIt
         return RecyclerView.NO_POSITION;
     }
 
-
+    /**
+     * ViewHolder para os itens de lixo.
+     */
     static class GameItemViewHolder extends RecyclerView.ViewHolder {
-
         ImageView imageView;
+
         public GameItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            // O ID da ImageView dentro de item_game.xml é item_image
             imageView = itemView.findViewById(R.id.item_image);
         }
     }

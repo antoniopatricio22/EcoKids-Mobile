@@ -1,4 +1,4 @@
-package com.example.ecokids_v2;
+package com.example.ecokids_v2.activities;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -13,13 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecokids_v2.R;
+import com.example.ecokids_v2.adapters.GameItemAdapter;
+import com.example.ecokids_v2.database.DatabaseHelper;
+import com.example.ecokids_v2.models.GameScore;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Activity principal do jogo - responsável pela lógica de gameplay.
+ * Integrada com banco de dados para salvar pontuações.
+ */
 public class GameActivity extends AppCompatActivity {
 
     private View selectedItemView = null;
@@ -31,6 +39,10 @@ public class GameActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private Button btnScore, btnTimer;
     private int score = 0;
+    private int errorCount = 0;
+
+    private long gameStartTime = 0;
+
     private MediaPlayer soundClick;
     private MediaPlayer soundCorrect;
     private MediaPlayer soundIncorrect;
@@ -40,17 +52,37 @@ public class GameActivity extends AppCompatActivity {
     private ImageView imgFeedback;
     private int selectedPosition = RecyclerView.NO_POSITION;
 
+    // Database
+    private DatabaseHelper databaseHelper;
+    private int playerId = -1;
+    private String playerName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // Inicializar views
         btnScore = findViewById(R.id.btnScore);
         btnTimer = findViewById(R.id.btnTimer);
         btnSound = findViewById(R.id.btnSound);
         imgFeedback = findViewById(R.id.imgFeedback);
         recyclerItems = findViewById(R.id.recyclerItems);
 
+        // Inicializar database
+        databaseHelper = new DatabaseHelper(this);
+
+        // Obter dados do Intent
+        playerId = getIntent().getIntExtra("player_id", -1);
+        playerName = getIntent().getStringExtra("player_name");
+
+        if (playerId == -1 || playerName == null) {
+            Toast.makeText(this, "Erro ao carregar dados do jogador", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        // Inicializar sons
         soundClick = MediaPlayer.create(this, R.raw.click_sound);
         soundCorrect = MediaPlayer.create(this, R.raw.correct_sound);
         soundIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
@@ -151,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
                 removeItemFromBoard();
             } else {
                 if (soundIncorrect != null) soundIncorrect.start();
+                errorCount++;
                 showFeedback(false);
             }
         });
@@ -177,6 +210,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startGameTimer() {
+        gameStartTime = System.currentTimeMillis();
         countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -206,8 +240,23 @@ public class GameActivity extends AppCompatActivity {
     private void endGame() {
         if (countDownTimer != null) countDownTimer.cancel();
 
+        long gameTimeSeconds = 0;
+        if (gameStartTime > 0) {
+            gameTimeSeconds = (System.currentTimeMillis() - gameStartTime) / 1000;
+            if (gameTimeSeconds < 0) gameTimeSeconds = 0;
+        }
+
+        // Salvar pontuação no banco de dados
+        GameScore gameScore = new GameScore(playerId, score, errorCount, gameTimeSeconds);
+        long scoreId = databaseHelper.addGameScore(gameScore);
+
         Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+        intent.putExtra("player_name", playerName);
+        intent.putExtra("player_id", playerId);
         intent.putExtra("score", score);
+        intent.putExtra("error_count", errorCount);
+        intent.putExtra("game_time", gameTimeSeconds);
+        intent.putExtra("score_id", scoreId);
         startActivity(intent);
         finish();
     }

@@ -1,15 +1,44 @@
-*.iml
-.gradle
-/local.properties
+# Android Studio / IntelliJ
+.idea/
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+*.iml
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Local configuration
 local.properties
+
+# NDK / C++
+.cxx/
+.externalNativeBuild/
+
+# Captures / outputs
+captures/
+output.json
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Keystore (NUNCA subir chaves de assinatura)
+*.jks
+*.keystore
+
+# Android Profiling
+*.hprof
+
+# Ignorar arquivos markdown de documentação (exceto o README principal)
+*.md
+!README.MD

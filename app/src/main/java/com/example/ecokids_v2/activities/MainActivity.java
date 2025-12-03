@@ -1,4 +1,4 @@
-package com.example.ecokids_v2;
+package com.example.ecokids_v2.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,13 @@ import android.widget.Button;
 
 import android.content.Intent;
 
+import com.example.ecokids_v2.R;
+import com.example.ecokids_v2.dialogs.GameSelectionDialog;
+
+/**
+ * MainActivity - Tela inicial do jogo com menu principal.
+ * Permite ao usuário escolher entre jogar, aprender ou ver conquistas.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Button btnAprender, btnConquistas;

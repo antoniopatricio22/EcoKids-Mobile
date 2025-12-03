@@ -13,19 +13,19 @@
         android:theme="@style/Theme.EcoKids_v2">
 
         <activity
-            android:name=".ScoreActivity"
+            android:name=".activities.ScoreActivity"
             android:exported="false" />
         <activity
-            android:name=".GameActivity"
+            android:name=".activities.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".AchievementsActivity"
+            android:name=".activities.AchievementsActivity"
             android:exported="false" />
         <activity
-            android:name=".LearnActivity"
+            android:name=".activities.LearnActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
