@@ -42,3 +42,4 @@ Thumbs.db
 # Ignorar arquivos markdown de documentação (exceto o README principal)
 *.md
 !README.MD
+!Arquitetura.md
