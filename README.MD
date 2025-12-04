@@ -6,6 +6,8 @@ EcoKids Mobile é um jogo educativo para Android que ensina crianças sobre reci
 
 Este repositório contém a versão reorganizada do app com persistência local (SQLite), gerenciamento de jogadores, pontuações e um sistema de conquistas.
 
+Documentação do Projeto:  [link](https://docs.google.com/document/d/1y2ROruwTXwEb0XQ5ci-XlAfZJshxN-J2TP0-98kAlVA/edit?usp=sharing)
+
 ---
 
 ##  Funcionalidades Principais
