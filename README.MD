@@ -42,7 +42,7 @@ Arquivo físico no dispositivo/emulador: `/data/data/com.example.ecokids_v2/data
 ```
 com.example.ecokids_v2/
 │
-├── activities/                      #  Telas do Aplicativo
+├── activities/                      # Telas do Aplicativo
 │   ├── MainActivity.java            # Menu principal
 │   ├── GameActivity.java            # Gameplay
 │   ├── ScoreActivity.java           # Resultado e conquistas
@@ -63,7 +63,7 @@ com.example.ecokids_v2/
 ├── database/                        # Banco de Dados
 │   └── DatabaseHelper.java          # Gerenciamento SQLite
 │
-└── utils/                           # 🛠️ Utilitários (Futuro)
+└── utils/                           # Utilitários (Futuro)
     └── (Reservado)          # Utilitários e helpers
 ```
 

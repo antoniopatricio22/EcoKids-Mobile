@@ -23,7 +23,7 @@
 ```
 ---
 
-## 🔄 Fluxo de Jogo Completo
+## Fluxo de Jogo Completo
 
 ```
 ┌─────────────────┐
@@ -75,15 +75,15 @@
 
 | Conquista | Critério | Ícone |
 |-----------|----------|-------|
-| Campeão da Reciclagem | 0 erros + 25 acertos | 🏆 |
-| Reciclador Nota 100 | 25 acertos (com erros) | ⭐ |
-| Velocista Sustentável | Tempo < 60s | ⚡ |
+| Campeão da Reciclagem | 0 erros + 25 acertos | 
+| Reciclador Nota 100 | 25 acertos (com erros) |
+| Velocista Sustentável | Tempo < 60s |
 
 
 ---
 
 
-## 🗄️ Schemas de Tabelas
+## Schemas de Tabelas
 
 ### Tabela: players
 ```sql
